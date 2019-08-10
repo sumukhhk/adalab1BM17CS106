@@ -3,7 +3,7 @@
 using namespace std;
 int main()
 {
-	 std::fstream myfile("/home/bmsce/Documents/1bm17cs053/algorithm/Untitled2.txt", std::ios_base::in);
+	 std::fstream myfile("/home/bmsce/Documents/1bm17cs106/algorithm/input.txt", std::ios_base::in);
 	int n,i,j,a[100],k,t,flag=-1;
 	
 	cout<<"Enter the number of testcases "<<endl;
@@ -26,9 +26,9 @@ int main()
 		}
 		
 		if(flag==1)
-			cout<<"Element found!!!"<<endl;
+			cout<<"1"<<endl;
 		else
-			cout<<"Not found";
+			cout<<"-1";
 	
 	}
 	
