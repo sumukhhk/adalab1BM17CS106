@@ -1,4 +1,5 @@
 #include<iostream>
+#include<time.h>
 using namespace std;
 int main()
 {
@@ -22,14 +23,11 @@ int main()
 				}
 			}
 		}
-	cout<<"The sorted array is:";
-	for(int i=0;i<n;i++)
-		cout<<a[i]<<",";
 	cout<<endl<<"The "<<k<<" largest array elements are"<<endl;
 	for(int i=0;i<k;i++)
 		cout<<a[i]<<",";
 	end=clock();
 	double t=double(end-start)/double(CLOCKS_PER_SEC);
-	cout<<endl<<t<<" is the time taken";
+	cout<<endl<<t;
 	return 0;
 }
