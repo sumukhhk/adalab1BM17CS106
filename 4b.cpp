@@ -1,70 +1,60 @@
-#include <iostream>
+#include<iostream>
+#include<time.h>
 using namespace std;
-int ctr = 0, flag = 0;
-int rows, cols, arr[10][10];
-bool isPossible(int row, int col) {
-    if (row < rows && row >= 0 && col < cols && col >= 0)
-        return 1;
-    return 0;
+int G[10][10],visited[10],n,count=0;
+void DFS(int i)
+{
+int j;
+visited[i]=1;
+for(j=0;j<n;j++)
+if(!visited[j] && G[i][j]==1)
+{cout<<i<<" "<<j<<endl;
+DFS(j);
+count++;
 }
-void dfs(int row, int col) {
-    int testrow[] = {row-1, row, row+1};
-    int testcol[] = {col-1, col, col+1};
-    for(int i = 0; i <= 2; i++) {
-        for(int j = 0; j <= 2; j++) {
-            if(isPossible(testrow[i], testcol[j])) {
-                if(flag == 0) {
-                    ctr++;
-                    flag = 1;
-                }
-                if(arr[testrow[i]][testcol[j]] == 1) {
-                    arr[testrow[i]][testcol[j]] = 0;
-                    dfs(testrow[i], testcol[j]);
-                }
-            }
-        }
-    }
 }
-
-int main() {
-    clock_t start,end;
-    cout << "Enter no of rows and cols" << endl;
-    cin >> rows;
-    cin >> cols;
-    cout << "Enter elements of the array:" << endl;
-    for(int i = 0; i < rows; i++) {
-        for(int j = 0; j < cols; j++)
-            cin >> arr[i][j];
-    }
-    start = clock();
-    for(int i = 0; i < rows; i++) {
-        for(int j = 0; j < cols; j++)
-            if(arr[i][j] == 1) {
-                flag = 0;
-                dfs(i, j);
-                flag = 1;
-            }
-    }
-    end = clock();
-	
-    cout << "No of Islands: " << ctr << endl;
-    float exe = float(end-start)/CLOCKS_PER_SEC;
-    cout << "\nExecution time : "<<exe<<endl;
-		
-	return 0;
+int main()
+{
+int i,j;
+clock_t start,end;
+cout<<"Enter number of vertices:"<<endl;
+cin>>n;
+cout<<"Enter adjecency matrix of the graph:"<<endl;
+for(i=0;i<n;i++)
+for(j=0;j<n;j++)
+cin>>G[i][j];
+for(i=0;i<n;i++)
+visited[i]=0;
+start=clock();
+DFS(0);
+end=clock();
+cout<<"The no of islands are: "<<count<<endl;
+double t=double(end-start)/double(CLOCKS_PER_SEC);
+cout<<endl<<t;
+return 0;
 }
 
 /*
 OUTPUT:
-Enter no of rows and cols
-5
-5
-Enter elements of the array:
-1 1 0 0 0
-0 1 0 0 1
-1 0 0 1 1
-0 0 0 0 0
-1 0 1 1 0
-No of Islands: 4
-Execution time : 8e-06
+
+Enter number of vertices:
+7
+Enter adjecency matrix of the graph:
+0 1 1 1 1 0 0
+1 0 0 1 0 1 0
+1 0 0 0 0 0 1
+1 1 0 0 0 1 0
+1 0 0 0 0 0 1
+0 1 0 1 0 0 0
+0 0 1 0 1 0 0
+
+0 1
+1 3
+3 5
+0 2
+2 6
+6 4
+The no of islands are: 6
+
+3.3e-05
 */
