@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include<iostream.h>
 #include<time.h>
 using namespace std;
 int adj[10][10],n,v[10];
