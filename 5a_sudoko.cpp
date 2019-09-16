@@ -58,7 +58,8 @@ bool solveSuduko(){
     }
     return false;
 }
-int main(){
+int main()
+{
     cout<<"Enter Sudoku size(perfect square within 100):"<<endl;
     cin>>N;
     cout<<"Enter Sudoku elements:"<<endl;
@@ -68,15 +69,7 @@ int main(){
         }
     }
     SQN = sqrt(N);
-        cout<<"Sudoku:"<<endl;
-        for(int i=0;i<N;i++)
-        {
-          for(int j=0;j<N;j++)
-            cout<<grid[i][j]<<" ";
-        cout<<endl;
-    }
-
-    bool t = solveSuduko();
+     bool t = solveSuduko();
     cout<<endl<<"Solution:"<<endl;
      if(t){
      for(int i=0;i<N;i++){
@@ -90,25 +83,14 @@ int main(){
     {
         cout<<"No Solution";
     }
-
+return 0;
 }
 
 
 /*OUTPUT:
+
 Enter Sudoku size(perfect square within 100):9
-
 Enter Sudoku elements:
-0 0 0 0 0 0 2 0 0
-0 8 0 0 0 7 0 9 0
-6 0 2 0 0 0 5 0 0
-0 7 0 0 6 0 0 0 0
-0 0 0 9 0 1 0 0 0
-0 0 0 0 2 0 0 4 0
-0 0 5 0 0 0 6 0 3
-0 9 0 4 0 0 0 7 0
-0 0 6 0 0 0 0 0 0
-
-Sudoku
 0 0 0 0 0 0 2 0 0
 0 8 0 0 0 7 0 9 0
 6 0 2 0 0 0 5 0 0
@@ -129,6 +111,5 @@ Solution:
 8 4 5 7 9 2 6 1 3
 2 9 1 4 3 6 8 7 5
 7 3 6 1 8 5 4 2 9
-
 
 */
