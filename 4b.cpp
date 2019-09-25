@@ -1,60 +1,73 @@
 #include<iostream>
-#include<time.h>
+#define ROW 50
+#define COL 50
 using namespace std;
-int G[10][10],visited[10],n,count=0;
-void DFS(int i)
+int M[ROW][COL],n1,n2;
+bool visited[ROW][COL];
+int isSafe(int row,int col)
+{   return ((row>=0)&&(row<n1)&&(col>=0)&&(col<n2)&&(M[row][col]&& !visited[row][col]));
+}
+void DFS(int row,int col)
 {
-int j;
-visited[i]=1;
-for(j=0;j<n;j++)
-if(!visited[j] && G[i][j]==1)
-{cout<<i<<" "<<j<<endl;
-DFS(j);
-count++;
+        int rowNbr[]={-1,-1,-1,0,0,1,1,1};
+        int colNbr[]={-1,0,1,-1,1,-1,0,1};
+        visited[row][col]=true;
+        for(int k=0;k<8;k++)
+        {
+        if(isSafe(row+rowNbr[k],col+colNbr[k]))
+         {
+            DFS(row+rowNbr[k],col+colNbr[k]);
+          }
+        }
 }
-}
+    int countIslands()
+    {
+        int count=0;
+        for(int i=0;i<n1;++i)
+        {
+          for(int j=0;j<n2;++j)
+          {
+            if(M[i][j] && !visited[i][j])
+            {
+            DFS(i,j);
+            ++count;
+            }
+          }
+        }
+        return count;
+    }
 int main()
 {
-int i,j;
-clock_t start,end;
-cout<<"Enter number of vertices:"<<endl;
-cin>>n;
-cout<<"Enter adjecency matrix of the graph:"<<endl;
-for(i=0;i<n;i++)
-for(j=0;j<n;j++)
-cin>>G[i][j];
-for(i=0;i<n;i++)
-visited[i]=0;
-start=clock();
-DFS(0);
-end=clock();
-cout<<"The no of islands are: "<<count<<endl;
-double t=double(end-start)/double(CLOCKS_PER_SEC);
-cout<<endl<<t;
-return 0;
+   cout<<"Enter the no of rows and columns:"<<endl;
+    cin>>n1>>n2;
+    for(int i=0;i<n1;i++){
+        for(int j=0;j<n2;j++){
+        visited[i][j]=false;
+    }
+    }
+    cout<<"Enter the adjacency matrix";
+    for(int i=0;i<n1;i++){
+        for(int j=0;j<n2;j++){
+            cin>>M[i][j];
+            }
+    }
+    
+    int n=countIslands();
+    cout<<"No of islands: "<<n;
+    return 0;
 }
 
-/*
-OUTPUT:
-
-Enter number of vertices:
+/* output
+Enter the no of rows and columns:
 7
-Enter adjecency matrix of the graph:
+7
+Enter the adjacency matrix: 
 0 1 1 1 1 0 0
-1 0 0 1 0 1 0
+1 0 0 1 0 0 0
 1 0 0 0 0 0 1
 1 1 0 0 0 1 0
-1 0 0 0 0 0 1
+0 0 0 0 0 0 1
 0 1 0 1 0 0 0
 0 0 1 0 1 0 0
-
-0 1
-1 3
-3 5
-0 2
-2 6
-6 4
-The no of islands are: 6
-
-3.3e-05
+No of islands: 3
 */
