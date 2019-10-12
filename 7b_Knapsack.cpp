@@ -57,13 +57,17 @@ int main()
 /*
 OUTPUT
 Enter the no of items:
-5
+4
 Enter the values:
-25 20 15 40 50       
+12 10 20 15
 Enter the weights:
-3 2 1 4 5
+2 1 3 2
 Enter the knapsack capacity: 
-6
-Maximum Profit: 65
-Weights of items included: 5 1 
+5
+Maximum Profit: 37
+Item no  Weight
+4   ->   2
+2   ->   1
+1   ->   2
+
 */
