@@ -1,8 +1,7 @@
 #include <iostream> 
-#include <cstring> 
-#include <cstdlib> 
+#include <string>
 using namespace std;   
-void lcs( char *X, char *Y, int m, int n ) 
+void lcs( string X,string Y, int m, int n ) 
 { 
    int L[m+1][n+1];  
    for (int i=0; i<=m; i++) 
@@ -34,20 +33,20 @@ void lcs( char *X, char *Y, int m, int n )
       else
          j--; 
    }    
-   cout << "LCS of " << X << " and " << Y << " is " << lcs; 
+   cout << "LCS of " << X << " and " << Y << " is " << lcs<<endl; 
 }   
 int main() 
 { 
-  char X[10],Y[10]; 
+  string X,Y;
   cout<<"Enter the first string:"<<endl;
   cin>>X;
   cout<<"Enter the second string:"<<endl;
   cin>>Y; 
-  int m = strlen(X); 
-  int n = strlen(Y); 
+  int m = X.length(); 
+  int n = Y.length();
   lcs(X, Y, m, n); 
   return 0; 
-} 
+}
 
 /*
 OUTPUT
