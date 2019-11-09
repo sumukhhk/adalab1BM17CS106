@@ -1,101 +1,88 @@
+#include <bits/stdc++.h> 
+using namespace std;  
+#define V 5 
 
-#include<stdio.h>
-#include<stdlib.h>
- 
-#define infinity 9999
-#define MAX 20
- 
-int G[MAX][MAX],spanning[MAX][MAX],n;
- 
-int prims();
- 
-int main()
-{
-	int i,j,total_cost;
-	printf("Enter no. of vertices:");
-	scanf("%d",&n);
-	
-	printf("\nEnter the adjacency matrix:\n");
-	
-	for(i=0;i<n;i++)
-		for(j=0;j<n;j++)
-			scanf("%d",&G[i][j]);
-	
-	total_cost=prims();
-	printf("\nspanning tree matrix:\n");
-	
-	for(i=0;i<n;i++)
-	{
-		printf("\n");
-		for(j=0;j<n;j++)
-			printf("%d\t",spanning[i][j]);
-	}
-	
-	printf("\n\nTotal cost of spanning tree=%d",total_cost);
-	return 0;
-}
- 
-int prims()
-{
-	int cost[MAX][MAX];
-	int u,v,min_distance,distance[MAX],from[MAX];
-	int visited[MAX],no_of_edges,i,min_cost,j;
-	
-	
-	for(i=0;i<n;i++)
-		for(j=0;j<n;j++)
-		{
-			if(G[i][j]==0)
-				cost[i][j]=infinity;
-			else
-				cost[i][j]=G[i][j];
-				spanning[i][j]=0;
-		}
-		
-	
-	distance[0]=0;
-	visited[0]=1;
-	
-	for(i=1;i<n;i++)
-	{
-		distance[i]=cost[0][i];
-		from[i]=0;
-		visited[i]=0;
-	}
-	
-	min_cost=0;		//cost of spanning tree
-	no_of_edges=n-1;		//no. of edges to be added
-	
-	while(no_of_edges>0)
-	{
-		
-		min_distance=infinity;
-		for(i=1;i<n;i++)
-			if(visited[i]==0&&distance[i]<min_distance)
-			{
-				v=i;
-				min_distance=distance[i];
-			}
-			
-		u=from[v];
-		
-		//insert the edge in spanning tree
-		spanning[u][v]=distance[v];
-		spanning[v][u]=distance[v];
-		no_of_edges--;
-		visited[v]=1;
-		
-		//updated the distance[] array
-		for(i=1;i<n;i++)
-			if(visited[i]==0&&cost[i][v]<distance[i])
-			{
-				distance[i]=cost[i][v];
-				from[i]=v;
-			}
-		
-		min_cost=min_cost+cost[u][v];
-	}
-	
-	return(min_cost);
-}
+int minKey(int key[], bool mstSet[]) 
+{  
+	int min = INT_MAX, min_index; 
 
+	for (int v = 0; v < V; v++) 
+		if (mstSet[v] == false && key[v] < min) 
+			min = key[v], min_index = v; 
+
+	return min_index; 
+}  
+void printMST(int parent[], int graph[V][V]) 
+{ 
+	cout<<"Edge \t| Weight\n"; 
+    cout<<"--------|--------\n";
+	for (int i = 1; i < V; i++) 
+		cout<<parent[i]<<" -> "<<i<<" \t| "<< graph[i][parent[i]]<<" \n"; 
+} 
+void primMST(int graph[V][V]) 
+{  
+	int parent[V]; 
+	int key[V];  
+	bool mstSet[V]; 
+	for (int i = 0; i < V; i++) 
+		key[i] = INT_MAX, mstSet[i] = false;  
+	key[0] = 0; 
+	parent[0] = -1;
+	for (int count = 0; count < V - 1; count++) 
+	{ 
+		int u = minKey(key, mstSet); 
+		mstSet[u] = true;
+		for (int v = 0; v < V; v++) 
+			if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v]) 
+				parent[v] = u, key[v] = graph[u][v]; 
+	} 
+	printMST(parent, graph); 
+} 
+int main() 
+{ 
+	int graph[V][V];/* = { { 0, 2, 0, 6, 0 }, 
+						{ 2, 0, 3, 8, 5 }, 
+						{ 0, 3, 0, 0, 7 }, 
+						{ 6, 8, 0, 0, 9 }, 
+						{ 0, 5, 7, 9, 0 } }; */
+    cout<<"Enter graph weights:\n";
+    for(int i=0;i<V;i++)
+    for(int j=0;j<V;j++)
+    cin>>graph[i][j];
+
+    cout<<"\nThe Given Graph:\n";
+    for(int i=0;i<V;i++)
+    {
+        for(int j=0;j<V;j++)
+        {
+            cout<<graph[i][j]<<"\t";
+        }
+    cout<<"\n";
+    }
+    cout<<"\nPrim's Minimal Spanning tree solution:\n\n";
+	primMST(graph); 
+
+	return 0; 
+} 
+/*
+OUTPUT:
+Enter graph weights:
+0 2 0 6 0
+2 0 3 8 5
+0 3 0 0 7
+6 8 0 0 9
+0 5 7 9 0
+The Given Graph:
+0       2       0       6       0
+2       0       3       8       5
+0       3       0       0       7
+6       8       0       0       9
+0       5       7       9       0
+Prim's Minimal Spanning tree solution:
+Edge    | Weight
+--------|--------
+0 -> 1  | 2
+1 -> 2  | 3
+0 -> 3  | 6
+1 -> 4  | 5
+*/
